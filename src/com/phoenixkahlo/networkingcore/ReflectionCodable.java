@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 
-import com.phoenixkahlo.networkingcore.RegisteredObjectEncoder.Encodable;
+import com.phoenixkahlo.networkingcore.RegisteredObjectEncoderOld.Encodable;
 
 /**
  * Encodable and decodable that uses reflection to automagically code all primitive fields.

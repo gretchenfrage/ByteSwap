@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-import com.phoenixkahlo.networkingcore.RegisteredObjectEncoder.Encodable;
+import com.phoenixkahlo.networkingcore.RegisteredObjectEncoderOld.Encodable;
 
 
 public class SerializationUtils {
@@ -127,7 +127,7 @@ public class SerializationUtils {
 			throw new RuntimeException("Directed to write object of unknown type");
 	}
 	
-	public static void writeAny(Object obj, OutputStream out, RegisteredObjectEncoder encoder)
+	public static void writeAny(Object obj, OutputStream out, RegisteredObjectEncoderOld encoder)
 			throws IOException {
 		try {
 			writeAny(obj, out);

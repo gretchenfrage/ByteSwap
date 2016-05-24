@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import com.phoenixkahlo.networkingcore.RegisteredObjectEncoder.Encodable;
+import com.phoenixkahlo.networkingcore.RegisteredObjectEncoderOld.Encodable;
 
 /**
  * Sends method calls and their arguments across an OutputStream. 
@@ -39,7 +39,7 @@ public abstract class NetworkedMethodBroadcaster {
 	
 	private OutputStream out;
 	private Map<String, Short> headers = new HashMap<String, Short>();
-	private RegisteredObjectEncoder encoder = new RegisteredObjectEncoder();
+	private RegisteredObjectEncoderOld encoder = new RegisteredObjectEncoderOld();
 
 	/**
 	 * @param config the headers for different methods, in which the keys are the signature String 

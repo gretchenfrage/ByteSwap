@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.phoenixkahlo.networkingcore.RegisteredObjectDecoder.Decoder;
+import com.phoenixkahlo.networkingcore.RegisteredObjectDecoderOld.Decoder;
 
 /**
  * Reads method calls and their arguments from an InputStream, and activates the corresponding
@@ -45,7 +45,7 @@ public abstract class NetworkedMethodReceiver extends Thread {
 	
 	private InputStream in;
 	private Map<Short, Method> headers = new HashMap<Short, Method>();
-	private RegisteredObjectDecoder<Object> decoder = new RegisteredObjectDecoder<Object>();
+	private RegisteredObjectDecoderOld<Object> decoder = new RegisteredObjectDecoderOld<Object>();
 	
 	/**
 	 * @param config the headers for different methods, in which the keys are the signature String 

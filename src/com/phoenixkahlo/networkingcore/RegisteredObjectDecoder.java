@@ -5,25 +5,19 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisteredObjectDecoder<E> {
+public class RegisteredObjectDecoder implements ObjectDecoder {
 
-	public static interface Decoder<E> {
-		
-		E decode(InputStream in) throws IOException;
-		
+	private Map<Short, ObjectDecoder> types = new HashMap<Short, ObjectDecoder>();
+	
+	public void registerType(ObjectDecoder decoder, short header) {
+		types.put(header, decoder);
 	}
 	
-	private Map<Short, Decoder<? extends E>> decoders = new HashMap<Short, Decoder<? extends E>>();
-	
-	public void registerType(Decoder<E> decoder, short header) {
-		decoders.put(header, decoder);
-	}
-	
-	public E decode(InputStream in) throws IOException {
-		short header = SerializationUtils.readShort(in);
-		if (!decoders.containsKey(header))
-			throw new RuntimeException("Decodable type not registered.");
-		return decoders.get(header).decode(in);
+	@Override
+	public Object decode(InputStream in) throws IOException, BadDataException {
+		ObjectDecoder decoder = types.get(SerializationUtils.readShort(in));
+		if (decoder == null) throw new BadDataException("Invalid header");
+		return decoder.decode(in);
 	}
 	
 }
