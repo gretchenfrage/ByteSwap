@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-import com.phoenixkahlo.networkingcore.RegisteredObjectEncoderOld.Encodable;
-
-
 public class SerializationUtils {
 
 	private SerializationUtils() {}
@@ -106,7 +103,7 @@ public class SerializationUtils {
 		return new String(readByteArray(in), StandardCharsets.UTF_8);
 	}
 	
-	public static void writeAny(Object obj, OutputStream out) throws IOException, RuntimeException {
+	public static void writeAny(Object obj, OutputStream out) throws IOException, IllegalArgumentException {
 		if (obj instanceof Short)
 			writeShort((Short) obj, out);
 		else if (obj instanceof Integer)
@@ -124,37 +121,49 @@ public class SerializationUtils {
 		else if (obj instanceof String)
 			writeString((String) obj, out);
 		else
-			throw new RuntimeException("Directed to write object of unknown type");
+			throw new IllegalArgumentException("Unencodable type: " + obj);
 	}
 	
-	public static void writeAny(Object obj, OutputStream out, RegisteredObjectEncoderOld encoder)
-			throws IOException {
+	public static void writeAny(Object obj, ObjectEncoder encoder, OutputStream out) throws IOException,
+			IllegalArgumentException {
 		try {
 			writeAny(obj, out);
-		} catch (RuntimeException e) {
-			encoder.encode((Encodable) obj, out);
+		} catch (IllegalArgumentException e) {
+			if (encoder.canEncode(obj))
+				encoder.encode(obj, out);
+			else
+				throw e;
 		}
 	}
 	
-	public static Object readType(Class<?> type, InputStream in) throws IOException, RuntimeException {
-		if (type == short.class)
+	public static Object readType(Class<?> type, InputStream in) throws IOException, IllegalArgumentException {
+		if (type == short.class || type == Short.class)
 			return readShort(in);
-		else if (type == int.class)
+		else if (type == int.class || type == Integer.class)
 			return readInt(in);
-		else if (type == long.class)
+		else if (type == long.class || type == Long.class)
 			return readLong(in);
-		else if (type == char.class)
+		else if (type == char.class || type == Character.class)
 			return readChar(in);
-		else if (type == float.class)
+		else if (type == float.class || type == Float.class)
 			return readFloat(in);
-		else if (type == double.class)
+		else if (type == double.class || type == Double.class)
 			return readDouble(in);
-		else if (type == boolean.class)
+		else if (type == boolean.class || type == Boolean.class)
 			return readBoolean(in);
 		else if (type == String.class)
 			return readString(in);
 		else
-			throw new RuntimeException("Invalid read type");
+			throw new IllegalArgumentException("Undecodable type: " + type);
+	}
+	
+	public static Object readType(Class<?> type, ObjectDecoder decoder, InputStream in) throws IOException,
+			BadDataException {
+		try {
+			return readType(type, in);
+		} catch (IllegalArgumentException e) {
+			return decoder.decode(in);
+		}
 	}
 	
 }

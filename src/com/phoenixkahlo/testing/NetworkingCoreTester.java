@@ -4,15 +4,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
 
-public class Tester {
+public class NetworkingCoreTester {
 
 	public static void main(String[] args) throws Exception {
 		Properties methodConfig = new Properties();
 		methodConfig.setProperty("print(java.lang.String,int)", "1");
-		methodConfig.setProperty("printStringBox(networkedobjectstesting.StringBox)", "2");
-		
-		Properties objectConfig = new Properties();
-		objectConfig.setProperty("networkedobjectstesting.StringBox", "1");
+		methodConfig.setProperty("printStringBox(com.phoenixkahlo.testing.StringBox)", "2");
 		
 		class SocketBox {
 			Socket socket;
@@ -31,8 +28,8 @@ public class Tester {
 		serverSocket.close();
 		Socket socket2 = box.socket;
 		
-		TestingBroadcaster broadcaster = new TestingBroadcaster(socket1.getOutputStream(), methodConfig, objectConfig);
-		TestingReceiver receiver = new TestingReceiver(socket2.getInputStream(), methodConfig, objectConfig);
+		TestingBroadcaster broadcaster = new TestingBroadcaster(socket1.getOutputStream(), methodConfig);
+		TestingReceiver receiver = new TestingReceiver(socket2.getInputStream(), methodConfig);
 		
 		receiver.start();
 		

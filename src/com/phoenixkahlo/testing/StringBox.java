@@ -3,9 +3,9 @@ package com.phoenixkahlo.testing;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.phoenixkahlo.networkingcore.ReflectionCodable;
+import com.phoenixkahlo.networkingcore.PrimitiveReflectionCodable;
 
-public class StringBox extends ReflectionCodable {
+public class StringBox extends PrimitiveReflectionCodable {
 
 	private String string;
 	

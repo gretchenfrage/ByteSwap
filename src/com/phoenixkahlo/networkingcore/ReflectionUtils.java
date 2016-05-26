@@ -2,6 +2,7 @@ package com.phoenixkahlo.networkingcore;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,20 +25,22 @@ public class ReflectionUtils {
 	}
 	
 	/**
-	 * @return all fields of clazz, including invisible and inherited fields.
+	 * @return all fields of clazz, including invisible and inherited fields, except for
+	 * fields marked as transient.
 	 */
-	public static List<Field> getAllFields(Class<?> clazz) {
+	public static List<Field> getSerializableFields(Class<?> clazz) {
 		List<Field> fields = new ArrayList<Field>();
-		addAllFields(fields, clazz);
+		addSerializableFields(fields, clazz);
 		return fields;
 	}
 	
-	private static void addAllFields(List<Field> fields, Class<?> clazz) {
+	private static void addSerializableFields(List<Field> fields, Class<?> clazz) {
 		for (Field field : clazz.getDeclaredFields()) {
-			fields.add(field);
+			if (!Modifier.isTransient(field.getModifiers()))
+				fields.add(field);
 		}
 		if (clazz != Object.class)
-			addAllFields(fields, clazz.getSuperclass());
+			addSerializableFields(fields, clazz.getSuperclass());
 	}
 	
 }

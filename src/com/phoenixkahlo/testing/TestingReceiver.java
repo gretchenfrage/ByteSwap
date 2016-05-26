@@ -7,9 +7,9 @@ import com.phoenixkahlo.networkingcore.NetworkedMethodReceiver;
 
 public class TestingReceiver extends NetworkedMethodReceiver {
 
-	public TestingReceiver(InputStream in, Properties methodConfig, Properties objectConfig) {
+	public TestingReceiver(InputStream in, Properties methodConfig) {
 		super(in, methodConfig);
-		registerDecodableTypes(objectConfig);
+		registerType(StringBox::new, (short) 1);
 	}
 
 	@NetworkedMethod

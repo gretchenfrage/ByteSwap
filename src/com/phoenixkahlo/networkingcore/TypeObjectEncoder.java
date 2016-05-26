@@ -9,6 +9,7 @@ import java.io.OutputStream;
  */
 public class TypeObjectEncoder<E> implements ObjectEncoder {
 
+	@FunctionalInterface
 	public static interface TypeEncoder<E> {
 		
 		void encode(E obj, OutputStream out) throws IOException;
