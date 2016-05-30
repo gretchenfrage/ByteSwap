@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.phoenixkahlo.networkingcore.NetworkedMethodBroadcaster;
@@ -37,11 +33,6 @@ public class ByteSwapConnection extends Thread {
 			terminate();
 		}
 		
-		@NetworkedMethod
-		public void createFileReceiver(String id) {
-			broadcast("createFileReceiver(java.lang.String)", id);
-		}
-		
 	}
 	
 	private class ByteSwapConnectionReceiver extends NetworkedMethodReceiver {
@@ -56,17 +47,10 @@ public class ByteSwapConnection extends Thread {
 			terminate();
 		}
 		
-		@NetworkedMethod
-		public void createFileReceiver(String id) {
-			receiving.put(id, new FileReceiver());
-		}
-		
 	}
 	
 	private ByteSwapConnectionBroadcaster broadcaster;
 	private ByteSwapConnectionReceiver receiver;
-	private List<FileSender> sending = new ArrayList<FileSender>();
-	private Map<String, FileReceiver> receiving = new HashMap<String, FileReceiver>();
 	
 	/**
 	 * Creates the connection and starts receiving.
@@ -84,11 +68,7 @@ public class ByteSwapConnection extends Thread {
 	
 	@Override
 	public void run() {
-		while (true) {
-			for (int i = sending.size() - 1; i >= 0; i--) {
-				sending.get(i).tick();
-			}
-		}
+		
 	}
 	
 	/**

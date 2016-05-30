@@ -1,18 +1,19 @@
 package com.phoenixkahlo.byteswap;
 
-import java.io.File;
-import java.util.Map;
-
 /**
- * Represents a file being received accross a ByteSwapConnection
+ * Wraps a SimplifiedFileStructure and receives directives from the ByteSwapConnection from
+ * the FileSender to build the file structure.
  */
 public class FileReceiver {
+
+	private SimplifiedFileStructure files;
 	
-	//private File file;
-	private Map<String, File> contained;
-	
+	/**
+	 * Prompts the user for a location to save
+	 */
 	public FileReceiver() {
-		contained = FileUtils.cacheDir("FileReceiver.txt");
+		//TODO: implement
+		File base = new File("nyah")
 	}
 	
 }
