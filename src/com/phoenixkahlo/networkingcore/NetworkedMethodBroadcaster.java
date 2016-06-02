@@ -1,6 +1,5 @@
 package com.phoenixkahlo.networkingcore;
 
-import static com.phoenixkahlo.networkingcore.SerializationUtils.writeShort;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -72,12 +71,12 @@ public abstract class NetworkedMethodBroadcaster {
 	 */
 	protected void broadcast(String signature, Object ... args) {
 		try {
-			writeShort(headers.get(signature), out);
+			SerializationUtils.writeShort(headers.get(signature), out);
 			for (Object obj : args) {
 				SerializationUtils.writeAny(obj, encoder, out);
 			}
 		} catch (IOException e) {
-			disconnect();
+			kill();
 		}
 	}
 	
@@ -85,7 +84,7 @@ public abstract class NetworkedMethodBroadcaster {
 	 * Closes the OutputStream. May be called externally, or is called when IOException is thrown.
 	 * Can be overridden for further shutdown procedures.
 	 */
-	public void disconnect() {
+	public void kill() {
 		try {
 			out.close();
 		} catch (IOException e) {}

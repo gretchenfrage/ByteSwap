@@ -36,6 +36,7 @@ public abstract class NetworkedMethodReceiver extends Thread {
 	private InputStream in;
 	private Map<Short, Method> headers = new HashMap<Short, Method>();
 	private RegisteredObjectDecoder decoder = new RegisteredObjectDecoder();
+	private volatile boolean shouldContinueRunning = true;
 	
 	/**
 	 * @param config the headers for different methods, in which the keys are the signature String 
@@ -43,6 +44,8 @@ public abstract class NetworkedMethodReceiver extends Thread {
 	 * are shorts representing their headers. 
 	 */
 	public NetworkedMethodReceiver(InputStream in, Properties config) {
+		super("NetworkedMethodReceiver thread");
+		
 		this.in = in;
 		
 		Method[] methods = getClass().getMethods();
@@ -70,7 +73,7 @@ public abstract class NetworkedMethodReceiver extends Thread {
 	@Override
 	public void run() {
 		try {
-			while (true) {
+			while (shouldContinueRunning) {
 				short header = readShort(in);
 				if (!headers.containsKey(header))
 					throw new RuntimeException("Invalid header received: " + header);
@@ -82,7 +85,7 @@ public abstract class NetworkedMethodReceiver extends Thread {
 				method.invoke(this, args.toArray());
 			}
 		} catch (IOException | BadDataException e) {
-			disconnect();
+			kill();
 		} catch (InvocationTargetException | IllegalAccessException e) {
 			e.printStackTrace();
 			throw new RuntimeException("AbstractNetworkedMethodReceiver.NetworkedMethod invalidly applied.");
@@ -93,10 +96,16 @@ public abstract class NetworkedMethodReceiver extends Thread {
 	 * Closes the InputStream. May be called externally, or is called when IOException is thrown.
 	 * Can be overridden for further shutdown procedures.
 	 */
-	public void disconnect() {
+	public void kill() {
+		shouldContinueRunning = false;
 		try {
 			in.close();
 		} catch (IOException e) {}
+		try {
+			join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static boolean isNetworkedMethod(Method method) {

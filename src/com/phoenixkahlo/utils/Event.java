@@ -1,7 +1,7 @@
 package com.phoenixkahlo.utils;
 
 @FunctionalInterface
-public interface Activatable {
+public interface Event {
 
 	void activate();
 	

@@ -1,11 +1,9 @@
-package com.phoenixkahlo.byteswap;
+package com.phoenixkahlo.byteswapold;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,12 +64,18 @@ public class SimplifiedFileStructure {
 		return files.get(simplePath);
 	}
 	
-	public List<String> getAllFilePaths() {
-		return new ArrayList<String>(files.keySet());
+	public String[] getAllFilePaths() {
+		String[] out = new String[files.size()];
+		files.keySet().toArray(out);
+		return out;
+		//return new ArrayList<String>(files.keySet());
 	}
 	
-	public List<String> getAllFolderPaths() {
-		return new ArrayList<String>(folders.keySet());
+	public String[] getAllFolderPaths() {
+		String[] out = new String[folders.size()];
+		folders.keySet().toArray(out);
+		return out;
+		//return new ArrayList<String>(folders.keySet());
 	}
 	
 }

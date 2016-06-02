@@ -4,7 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.phoenixkahlo.byteswap.SimplifiedFileStructure;
+import com.phoenixkahlo.byteswapold.SimplifiedFileStructure;
 
 public class SimplifiedFileStructureTester {
 
