@@ -3,10 +3,10 @@ package com.phoenixkahlo.testing;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.phoenixkahlo.networkingcorenew.BadDataException;
-import com.phoenixkahlo.networkingcorenew.NetworkedMethodReceiver;
-import com.phoenixkahlo.networkingcorenew.NetworkedMethodReceiverThread;
-import com.phoenixkahlo.networkingcorenew.ObjectDecoder;
+import com.phoenixkahlo.networkingcore.BadDataException;
+import com.phoenixkahlo.networkingcore.NetworkedMethodReceiver;
+import com.phoenixkahlo.networkingcore.NetworkedMethodReceiverThread;
+import com.phoenixkahlo.networkingcore.ObjectDecoder;
 
 public class ThreadSleepTester {
 

@@ -1,4 +1,4 @@
-package com.phoenixkahlo.networkingcorenew;
+package com.phoenixkahlo.networkingcore;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

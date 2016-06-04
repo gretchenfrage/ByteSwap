@@ -1,4 +1,4 @@
-package com.phoenixkahlo.networkingcorenew;
+package com.phoenixkahlo.networkingcore;
 
 @FunctionalInterface
 public interface GeneralFunction {

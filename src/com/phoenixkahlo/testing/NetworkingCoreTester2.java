@@ -6,13 +6,13 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.phoenixkahlo.networkingcorenew.BadDataException;
-import com.phoenixkahlo.networkingcorenew.InstanceMethod;
-import com.phoenixkahlo.networkingcorenew.NetworkedMethodBroadcaster;
-import com.phoenixkahlo.networkingcorenew.NetworkedMethodReceiver;
-import com.phoenixkahlo.networkingcorenew.NetworkedMethodReceiverThread;
-import com.phoenixkahlo.networkingcorenew.ObjectDecoder;
-import com.phoenixkahlo.networkingcorenew.ObjectEncoder;
+import com.phoenixkahlo.networkingcore.BadDataException;
+import com.phoenixkahlo.networkingcore.InstanceMethod;
+import com.phoenixkahlo.networkingcore.NetworkedMethodBroadcaster;
+import com.phoenixkahlo.networkingcore.NetworkedMethodReceiver;
+import com.phoenixkahlo.networkingcore.NetworkedMethodReceiverThread;
+import com.phoenixkahlo.networkingcore.ObjectDecoder;
+import com.phoenixkahlo.networkingcore.ObjectEncoder;
 
 public class NetworkingCoreTester2 {
 
@@ -72,8 +72,8 @@ public class NetworkingCoreTester2 {
 		thread.start();
 		System.out.println("created receiver thread");
 		
-		broadcaster.register(BROADCAST_SPEAK, 1);
-		receiver.register(RECEIVE_SPEAK, 1);
+		broadcaster.registerType(BROADCAST_SPEAK, 1);
+		receiver.registerType(RECEIVE_SPEAK, 1);
 		System.out.println("coupled methods");
 		
 		broadcastSpeak("hello world!", 5);

@@ -5,12 +5,15 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Combines multiple types of ObjectEncoder, differentiating them with int headers.
+ */
 public class RegisteredObjectEncoder implements ObjectEncoder {
 
-	private Map<ObjectEncoder, Short> types = new HashMap<ObjectEncoder, Short>();
+	private Map<ObjectEncoder, Integer> types = new HashMap<ObjectEncoder, Integer>();
 	
-	public void registerType(ObjectEncoder encoder, short header) {
-		for (short n : types.values()) {
+	public void registerType(ObjectEncoder encoder, int header) {
+		for (int n : types.values()) {
 			if (n == header) throw new IllegalArgumentException("Duplicate headers");
 		}
 		types.put(encoder, header);
@@ -28,7 +31,7 @@ public class RegisteredObjectEncoder implements ObjectEncoder {
 	public void encode(Object obj, OutputStream out) throws IOException, IllegalArgumentException {
 		for (ObjectEncoder encoder : types.keySet()) {
 			if (encoder.canEncode(obj)) {
-				SerializationUtils.writeShort(types.get(encoder), out);
+				SerializationUtils.writeInt(types.get(encoder), out);
 				encoder.encode(obj, out);
 				return;
 			}

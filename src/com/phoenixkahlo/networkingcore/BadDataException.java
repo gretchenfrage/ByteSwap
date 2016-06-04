@@ -1,7 +1,7 @@
 package com.phoenixkahlo.networkingcore;
 
 /**
- * For tfw you receive data from an InputStream that doesn't follow protocol.
+ * For tfw you receive data from an InputStream that doesn't follow your data protocol.
  */
 public class BadDataException extends Exception {
 

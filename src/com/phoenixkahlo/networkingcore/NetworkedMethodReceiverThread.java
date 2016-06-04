@@ -1,4 +1,4 @@
-package com.phoenixkahlo.networkingcorenew;
+package com.phoenixkahlo.networkingcore;
 
 import java.io.IOException;
 
@@ -13,11 +13,13 @@ public class NetworkedMethodReceiverThread extends Thread {
 	
 	@Override
 	public void run() {
+		System.out.println("beginning receiver thread");
 		try {
 			while (true) {
 				receiver.receive();
 			}
 		} catch (IOException | BadDataException e) {
+			e.printStackTrace();
 			disconnected();
 		}
 	}
@@ -25,7 +27,9 @@ public class NetworkedMethodReceiverThread extends Thread {
 	/**
 	 * Called at the end of this thread's life.
 	 */
-	protected void disconnected() {}
+	protected void disconnected() {
+		System.out.println("disconnected");
+	}
 	
 	public void kill() {
 		interrupt();

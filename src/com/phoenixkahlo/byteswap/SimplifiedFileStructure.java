@@ -1,4 +1,4 @@
-package com.phoenixkahlo.byteswapold;
+package com.phoenixkahlo.byteswap;
 
 import java.io.File;
 import java.io.IOException;

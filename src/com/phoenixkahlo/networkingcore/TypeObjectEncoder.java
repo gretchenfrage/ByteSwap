@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Encodes a particular, single type of object.
+ * Encodes a single class of object. The encoder is designed for setup with anonymous/lambda/
+ * pass-through classes.
  * @param <E> what type of object it's encoding
  */
 public class TypeObjectEncoder<E> implements ObjectEncoder {
